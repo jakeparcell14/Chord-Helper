@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Chord 
+public class ChordSet
 {
 	private int root;
 	
@@ -9,26 +9,17 @@ public class Chord
 	
 	private int[] minor;
 
-	private int[] diminished;
-
-	private int[] augmented;
-
-	private int[] sus2;
-
-	private int[] sus4;
-
-	private int[] dominantSeventh;
-
-	private int[] majorSeventh;
-	
-	private int[] minorSeventh;
-
 	private HashMap<String, int[]> chords;
 	
-	public Chord(String r)
+	public ChordSet(int r)
 	{
-		root = getNoteNumber(r);
+		root = r;
 		setChords();
+	}
+	
+	public int getRootNumber()
+	{
+		return root;
 	}
 	
 	public HashMap<String, int[]> getChords()
@@ -55,69 +46,13 @@ public class Chord
 	{
 		chords.put("major", major);
 		chords.put("minor", minor);
-		chords.put("diminished", diminished);
-		chords.put("augmented", augmented);
-		chords.put("sus2", sus2);
-		chords.put("sus4", sus4);
-		chords.put("dominantSeven", dominantSeventh);
-		chords.put("majorSeven", majorSeventh);
-		chords.put("minorSeven", minorSeventh);
-	}
-	
-	private int getNoteNumber(String n)
-	{		
-		// default to C natural
-		int noteNum = 0;
-		
-		if(n.contains("C"))
-		{
-			noteNum = 0;
-		}
-		else if(n.contains("D"))
-		{
-			noteNum = 2;
-		}
-		else if(n.contains("E"))
-		{
-			noteNum = 4;
-		}
-		else if(n.contains("F"))
-		{
-			noteNum = 5;
-		}
-		else if(n.contains("G"))
-		{
-			noteNum = 7;
-		}
-		else if(n.contains("A"))
-		{
-			noteNum = 9;
-		}
-		else if(n.contains("B"))
-		{
-			noteNum = 11;
-		}
-		else
-		{
-			return -1;
-		}
-		
-		
-		if(n.contains("#"))
-		{
-			//note is sharp
-			return (noteNum + 1) % 12;
-		}
-		else if(n.contains("b"))
-		{
-			//note is flat
-			return (noteNum -1) % 12;
-		}
-		else
-		{
-			// note is natural
-			return noteNum;
-		}
+		chords.put("diminished", setDiminished());
+		chords.put("augmented", setAugmented());
+		chords.put("sus2", setSus2());
+		chords.put("sus4", setSus4());
+		chords.put("dominantSeven", setDominantSeventh());
+		chords.put("majorSeven", setMajorSeventh());
+		chords.put("minorSeven", setMinorSeventh());
 	}
 		
 	public void setMajor()
@@ -136,64 +71,69 @@ public class Chord
 		minor[2] = major[2]; // perfect fifth
 	}
 	
-	public void setDiminished()
+	public int[] setDiminished()
 	{
-		diminished = new int[3];
+		int[] diminished = new int[3];
 		diminished[0] = root;
 		diminished[1] = minor[1]; // minor third
 		diminished[2] = (minor[2] - 1) % 12; // flat fifth
+		return diminished;
 	}
 	
-	public void setAugmented()
+	public int[] setAugmented()
 	{
-		augmented = new int[3];
+		int[] augmented = new int[3];
 		augmented[0] = root;
 		augmented[1] = major[1]; // major third
 		augmented[2] = (major[2] + 1) % 12; // sharp fifth
+		return augmented;
 	}
 	
-	public void setSus2()
+	public int[] setSus2()
 	{
-		sus2 = new int[3];
+		int[] sus2 = new int[3];
 		sus2[0] = root;
 		sus2[1] = (root + 2) % 12; // major second
 		sus2[2] = major[2]; // perfect fifth
+		return sus2;
 	}
 	
-	public void setSus4()
+	public int[] setSus4()
 	{
-		sus4 = new int[3];
+		int[] sus4 = new int[3];
 		sus4[0] = root;
 		sus4[1] = (major[1] + 1) % 12; // perfect fourth
 		sus4[2] = major[2]; // perfect fifth
+		return sus4;
 	}
 	
-	public void setDominantSeventh()
+	public int[] setDominantSeventh()
 	{
-		dominantSeventh = new int[4];
+		int[] dominantSeventh = new int[4];
 		dominantSeventh[0] = root;
 		dominantSeventh[1] = major[1]; // major third
 		dominantSeventh[2] = major[2]; // perfect fifth
 		dominantSeventh[3] = (root - 2) % 12; // minor seventh
+		return dominantSeventh;
 	}
 	
-	public void setMajorSeventh()
+	public int[] setMajorSeventh()
 	{
-		majorSeventh = new int[4];
+		int[] majorSeventh = new int[4];
 		majorSeventh[0] = root;
 		majorSeventh[1] = major[1]; // major third
 		majorSeventh[2] = major[2]; // perfect fifth
 		majorSeventh[3] = (root - 1) % 12; // major seventh
+		return majorSeventh;
 	}
 	
-	public void setMinorSeventh()
+	public int[] setMinorSeventh()
 	{
-		minorSeventh = new int[4];
+		int[] minorSeventh = new int[4];
 		minorSeventh[0] = root;
 		minorSeventh[1] = minor[1]; // minor third
 		minorSeventh[2] = minor[2]; // perfect fifth
 		minorSeventh[3] = (root - 2) % 12; // minor seventh
+		return minorSeventh;
 	}
-
-
 }
