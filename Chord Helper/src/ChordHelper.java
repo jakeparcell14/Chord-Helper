@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ChordHelper {
@@ -10,8 +11,7 @@ public class ChordHelper {
 		System.out.println("2. Show all chords in a given key");
 		System.out.println("3. Exit");
 
-		//System.out.println("Enter a root note and I will show you all chords with notes in that key");
-		//System.out.println("(use capital letter, # for sharp, b for flat)");
+		ArrayList<ChordSet> allChords = getAllChords();
 
 		Scanner in = new Scanner(System.in);
 
@@ -23,11 +23,11 @@ public class ChordHelper {
 
 				if(userChoice == 1)
 				{
-					
+					chordsWithRoot(allChords);
 				}
 				else if(userChoice == 2)
 				{
-
+					chordsInKey();
 				}
 				else if(userChoice == 3)
 				{
@@ -47,22 +47,48 @@ public class ChordHelper {
 			}
 		}
 	}
-	
-	public static void chordsWithRoot()
+
+	public static void chordsWithRoot(ArrayList<ChordSet> allChords)
 	{
-		
+		System.out.println("Enter a root note and I will show you all chords with that root");
+		System.out.println("(use capital letter, # for sharp, b for flat)");
+
+		Scanner in = new Scanner(System.in);
+
+		if(in.hasNext())
+		{
+			String userInput = in.next();
+			
+			int root = getNoteNumber(userInput.substring(0, 1));
+			
+			if(userInput.length() > 1)
+			{
+				if(userInput.substring(1, 2).equals("#"))
+				{
+					//note is sharp
+					root++;
+				}
+				else if(userInput.substring(1, 2).equals("b"))
+				{
+					//note is flat
+					root--;
+				}
+			}
+			
+			allChords.get(root).printAllChords();
+		}
 	}
-	
+
 	public static void chordsInKey()
 	{
-		
+
 	}
-	
-	public int getNoteNumber(String n)
+
+	public static int getNoteNumber(String n)
 	{		
 		// default to C natural
 		int noteNum = 0;
-		
+
 		if(n.contains("C"))
 		{
 			noteNum = 0;
@@ -95,8 +121,8 @@ public class ChordHelper {
 		{
 			return -1;
 		}
-		
-		
+
+
 		if(n.contains("#"))
 		{
 			//note is sharp
@@ -113,8 +139,8 @@ public class ChordHelper {
 			return noteNum;
 		}
 	}
-	
-	public int[] getMajorKey(int root)
+
+	public static int[] getMajorKey(int root)
 	{
 		//set intervals between notes
 		int[] key = {0, 2, 4, 5, 7, 9, 11};
@@ -126,8 +152,8 @@ public class ChordHelper {
 		}
 		return key;
 	}
-	
-	public int[] getMinorKey(int root)
+
+	public static int[] getMinorKey(int root)
 	{
 		//set intervals between notes
 		int[] key = {0, 2, 3, 5, 7, 8, 10};
@@ -138,6 +164,20 @@ public class ChordHelper {
 			key[i] = (key[i] + root) % 12;
 		}
 		return key;
+	}
+
+	public static ArrayList<ChordSet> getAllChords()
+	{
+		ArrayList<ChordSet> chords = new ArrayList<ChordSet>();
+
+		for(int i = 0; i < 12; i++)
+		{
+			ChordSet c = new ChordSet(i);
+
+			chords.add(c);
+		}
+
+		return chords;
 	}
 
 }

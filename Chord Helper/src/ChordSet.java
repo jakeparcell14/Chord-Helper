@@ -27,6 +27,23 @@ public class ChordSet
 		return chords;
 	}
 	
+	public int[] getChordType(String key)
+	{
+		if(chords.containsKey(key))
+		{
+			return chords.get(key);
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	public void printAllChords()
+	{
+		//TODO
+	}
+	
 	private void setChords()
 	{
 		setMajor();
