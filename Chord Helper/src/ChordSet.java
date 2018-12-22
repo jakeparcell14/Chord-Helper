@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 public class ChordSet
 {
@@ -9,11 +10,12 @@ public class ChordSet
 	
 	private int[] minor;
 
-	private HashMap<String, int[]> chords;
+	private LinkedHashMap<String, int[]> chords;
 	
 	public ChordSet(int r)
 	{
 		root = r;
+		chords = new LinkedHashMap<String, int[]>();
 		setChords();
 	}
 	
@@ -22,7 +24,7 @@ public class ChordSet
 		return root;
 	}
 	
-	public HashMap<String, int[]> getChords()
+	public LinkedHashMap<String, int[]> getChords()
 	{
 		return chords;
 	}
@@ -37,11 +39,6 @@ public class ChordSet
 		{
 			return null;
 		}
-	}
-	
-	public void printAllChords()
-	{
-		//TODO
 	}
 	
 	private void setChords()
@@ -61,8 +58,8 @@ public class ChordSet
 	
 	private void fillChords()
 	{
-		chords.put("major", major);
-		chords.put("minor", minor);
+		chords.put("major", setMajor());
+		chords.put("minor", setMinor());
 		chords.put("diminished", setDiminished());
 		chords.put("augmented", setAugmented());
 		chords.put("sus2", setSus2());
@@ -72,20 +69,22 @@ public class ChordSet
 		chords.put("minorSeven", setMinorSeventh());
 	}
 		
-	public void setMajor()
+	public int[] setMajor()
 	{
 		major = new int[3];
 		major[0] = root;
 		major[1] = (root + 4) % 12; // major third
 		major[2] = (root + 7) % 12; //perfect fifth
+		return major;
 	}
 	
-	public void setMinor()
+	public int[] setMinor()
 	{
 		minor = new int[3];
 		minor[0] = root;
 		minor[1] = (major[1] - 1) % 12; // minor third
 		minor[2] = major[2]; // perfect fifth
+		return minor;
 	}
 	
 	public int[] setDiminished()
