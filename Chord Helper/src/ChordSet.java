@@ -75,6 +75,7 @@ public class ChordSet
 		major[0] = root;
 		major[1] = (root + 4) % 12; // major third
 		major[2] = (root + 7) % 12; //perfect fifth
+		
 		return major;
 	}
 	
@@ -82,8 +83,9 @@ public class ChordSet
 	{
 		minor = new int[3];
 		minor[0] = root;
-		minor[1] = (major[1] - 1) % 12; // minor third
+		minor[1] = (((major[1] - 1) % 12) + 12) % 12; // minor third
 		minor[2] = major[2]; // perfect fifth
+		
 		return minor;
 	}
 	
@@ -92,7 +94,8 @@ public class ChordSet
 		int[] diminished = new int[3];
 		diminished[0] = root;
 		diminished[1] = minor[1]; // minor third
-		diminished[2] = (minor[2] - 1) % 12; // flat fifth
+		diminished[2] = (((minor[2] - 1) % 12) + 12) % 12; // flat fifth
+		
 		return diminished;
 	}
 	
@@ -102,6 +105,7 @@ public class ChordSet
 		augmented[0] = root;
 		augmented[1] = major[1]; // major third
 		augmented[2] = (major[2] + 1) % 12; // sharp fifth
+
 		return augmented;
 	}
 	
@@ -111,6 +115,7 @@ public class ChordSet
 		sus2[0] = root;
 		sus2[1] = (root + 2) % 12; // major second
 		sus2[2] = major[2]; // perfect fifth
+
 		return sus2;
 	}
 	
@@ -120,6 +125,7 @@ public class ChordSet
 		sus4[0] = root;
 		sus4[1] = (major[1] + 1) % 12; // perfect fourth
 		sus4[2] = major[2]; // perfect fifth
+
 		return sus4;
 	}
 	
@@ -129,7 +135,8 @@ public class ChordSet
 		dominantSeventh[0] = root;
 		dominantSeventh[1] = major[1]; // major third
 		dominantSeventh[2] = major[2]; // perfect fifth
-		dominantSeventh[3] = (root - 2) % 12; // minor seventh
+		dominantSeventh[3] = (((root - 2) % 12) + 12) % 12; // minor seventh
+
 		return dominantSeventh;
 	}
 	
@@ -139,7 +146,8 @@ public class ChordSet
 		majorSeventh[0] = root;
 		majorSeventh[1] = major[1]; // major third
 		majorSeventh[2] = major[2]; // perfect fifth
-		majorSeventh[3] = (root - 1) % 12; // major seventh
+		majorSeventh[3] = (((root - 1) % 12) + 12) % 12; // major seventh
+
 		return majorSeventh;
 	}
 	
@@ -149,7 +157,8 @@ public class ChordSet
 		minorSeventh[0] = root;
 		minorSeventh[1] = minor[1]; // minor third
 		minorSeventh[2] = minor[2]; // perfect fifth
-		minorSeventh[3] = (root - 2) % 12; // minor seventh
+		minorSeventh[3] = (((root - 2) % 12) + 12) % 12; // minor seventh
+
 		return minorSeventh;
 	}
 }

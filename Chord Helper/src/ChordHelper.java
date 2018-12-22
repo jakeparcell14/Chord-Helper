@@ -93,6 +93,8 @@ public class ChordHelper {
 			String userInput = in.next();
 
 			String root = "";
+			
+			String keyType = "";
 
 			int[] key = {};
 
@@ -103,11 +105,13 @@ public class ChordHelper {
 				if(userInput.substring(1, 2).equals("M"))
 				{
 					key = getMajorKey(root);
+					keyType = "Major";
 				}
 				else if(userInput.substring(1, 2).equals("m"))
 				{
 					//key is minor
 					key = getMinorKey(root);
+					keyType = "Minor";
 				}
 			}
 			else if(userInput.length() == 3)
@@ -117,13 +121,17 @@ public class ChordHelper {
 				if(userInput.substring(2, 3).equals("M"))
 				{
 					key = getMajorKey(root);
+					keyType = "Major";
 				}
 				else if(userInput.substring(2, 3).equals("m"))
 				{
 					//key is minor
 					key = getMinorKey(root);
+					keyType = "Minor";
 				}
 			}
+			
+			System.out.println("Chords with notes in the key of " + root + " " + keyType + "\n");
 
 			printChordsInKey(root, key, allChords);
 		}
@@ -176,7 +184,7 @@ public class ChordHelper {
 		else if(n.contains("b"))
 		{
 			//note is flat
-			return (noteNum -1) % 12;
+			return (((noteNum - 1) % 12) + 12) % 12;
 		}
 		else
 		{
@@ -215,6 +223,9 @@ public class ChordHelper {
 			//maintain intervals but start at new root
 			key[i] = (key[i] + root) % 12;
 		}
+		
+		Arrays.sort(key);
+
 		return key;
 	}
 
@@ -324,8 +335,6 @@ public class ChordHelper {
 
 	public static void printChordsInKey(String root, int[] key, ArrayList<ChordSet> allChords)
 	{
-		System.out.println("Chords with notes in the key of " + root + "\n");
-
 		for(ChordSet rootChords : allChords)
 		{
 			String chordRoot = getNoteLetter(rootChords.getRootNumber());
